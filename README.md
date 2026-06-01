@@ -102,9 +102,9 @@ title,category,description,location,duration,price,slots,image_url
 
 Add your group member names here:
 
-1. Full Name
-2. Full Name
-3. Full Name
+1. Jit Lee Romero
+2. Maravilla kentwinsley
+3. Domantay Cristopherson
 
 ## Hosting Link
 
