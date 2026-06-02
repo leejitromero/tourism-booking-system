@@ -1,25 +1,23 @@
 <x-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+    <h3 class="text-center mb-4" style="color: #333; font-weight: 700;">Login</h3>
+
+    <x-auth-session-status class="mb-3" :status="session('status')" />
 
     <form method="POST" action="{{ route('login') }}">
         @csrf
 
-        <!-- Email Address -->
         <div class="mb-3">
-            <x-input-label for="email" :value="__('Email')" />
+            <x-input-label for="email" :value="__('Email Address')" />
             <x-text-input id="email" class="form-control" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+            <x-input-error :messages="$errors->get('email')" class="text-danger mt-2" />
         </div>
 
-        <!-- Password -->
         <div class="mb-3">
             <x-input-label for="password" :value="__('Password')" />
             <x-text-input id="password" class="form-control" type="password" name="password" required autocomplete="current-password" />
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+            <x-input-error :messages="$errors->get('password')" class="text-danger mt-2" />
         </div>
 
-        <!-- Remember Me -->
         <div class="mb-3 form-check">
             <input id="remember_me" type="checkbox" class="form-check-input" name="remember">
             <label for="remember_me" class="form-check-label">
@@ -27,16 +25,16 @@
             </label>
         </div>
 
-        <div class="d-flex justify-content-between align-items-center mt-4">
-            @if (Route::has('password.request'))
-                <a href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
+        <button type="submit" class="btn btn-primary">{{ __('Log in') }}</button>
 
-            <x-primary-button>
-                {{ __('Log in') }}
-            </x-primary-button>
+        @if (Route::has('password.request'))
+            <div class="forgot-password">
+                <a href="{{ route('password.request') }}">{{ __('Forgot your password?') }}</a>
+            </div>
+        @endif
+
+        <div class="register-link">
+            Don't have an account? <a href="{{ route('register') }}">Register here</a>
         </div>
     </form>
 </x-layout>
