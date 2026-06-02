@@ -15,6 +15,7 @@
         body{background:var(--soft);font-family:Segoe UI,Arial,sans-serif;color:#172033}.navbar{background:var(--main)}
         .navbar-brand,.nav-link{font-weight:600}.hero{background:linear-gradient(90deg,rgba(0,53,128,.92),rgba(0,113,194,.70)),url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1600&auto=format&fit=crop');background-size:cover;background-position:center;color:#fff;padding:70px 0 105px;border-radius:0 0 28px 28px}.search-box{margin-top:-55px;position:relative;z-index:2}.search-card{border:4px solid var(--yellow);border-radius:16px;box-shadow:0 20px 45px rgba(15,23,42,.18)}
         .card{border:0;border-radius:18px;box-shadow:0 10px 25px rgba(15,23,42,.08)}.package-card{transition:.2s}.package-card:hover,.booking-list-card:hover{box-shadow:0 18px 38px rgba(15,23,42,.14)}.package-img{height:235px;object-fit:cover;border-radius:18px 18px 0 0}.listing-img{height:255px;width:100%;object-fit:cover}.detail-main-img{height:520px;width:100%;object-fit:cover;border-radius:18px;box-shadow:0 10px 25px rgba(15,23,42,.10)}.summary-img{height:230px;width:100%;object-fit:cover;border-radius:18px 18px 0 0}.btn-main{background:var(--accent);color:#fff;border:0}.btn-main:hover{background:#005fa3;color:#fff}.btn-yellow{background:var(--yellow);color:#172033;border:0;font-weight:700}.badge-rating{background:#003b95;color:white}.score-box{background:#003b95;color:#fff;border-radius:8px;padding:.45rem .6rem;font-weight:800;display:inline-block}.small-score{font-size:.85rem;padding:.25rem .5rem}.text-booking{color:#006ce4}.stars{color:#febb02;font-size:.65rem;vertical-align:middle}.heart-btn{position:absolute;top:12px;right:12px;width:42px;height:42px;border-radius:50%;border:0;background:#fff;font-size:1.2rem;box-shadow:0 4px 14px rgba(0,0,0,.18)}.amenity-pill{background:#eef6ff;color:#003b95;border-radius:999px;padding:.32rem .65rem;font-weight:600;font-size:.82rem}.listing-description{line-height:1.55}.map-placeholder{background:#eaf4ff;border:1px dashed #8bbceb;border-radius:16px;min-height:170px;display:flex;align-items:center;justify-content:center;color:#003b95;font-weight:700}.booking-summary{position:sticky;top:95px}.stat-card{border-left:5px solid var(--accent)}.footer{background:var(--dark);color:white;margin-top:70px;padding:26px 0}.table td,.table th{vertical-align:middle}.mini-muted{font-size:.9rem;color:#64748b}.feature-pill{background:#e8f2ff;color:#003b95;border-radius:999px;padding:.35rem .7rem;font-weight:600;font-size:.85rem}.print-only{display:none}@media(max-width:767px){.listing-img{height:220px}.detail-main-img{height:330px}}@media print{nav,.footer,.no-print,.btn,.search-box{display:none!important}.print-only{display:block}body{background:white}.card{box-shadow:none;border:1px solid #ddd}}
+        .modal-content{border-radius:15px;border:none}.modal-header{border-bottom:1px solid #eee;background:#f8f9fa}.modal-title{font-weight:700;color:#003b95}.form-control,.form-select{border-radius:8px;border:1px solid #ddd}.form-control:focus,.form-select:focus{border-color:#003b95;box-shadow:0 0 0 0.2rem rgba(0,59,149,.25)}.btn-primary{background:#003b95;border:none}.btn-primary:hover{background:#002d6b}
     </style>
 </head>
 <body>
@@ -36,8 +37,8 @@
                         <form method="POST" action="{{ route('logout') }}">@csrf<button class="btn btn-light btn-sm rounded-pill px-3">Logout</button></form>
                     </li>
                 @else
-                    <li><a class="btn btn-light btn-sm rounded-pill px-3" href="{{ route('login') }}">Login</a></li>
-                    <li><a class="btn btn-yellow btn-sm rounded-pill px-3" href="{{ route('register') }}">Register</a></li>
+                    <li><button class="btn btn-light btn-sm rounded-pill px-3" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button></li>
+                    <li><button class="btn btn-yellow btn-sm rounded-pill px-3" data-bs-toggle="modal" data-bs-target="#registerModal">Register</button></li>
                 @endauth
             </ul>
         </div>
@@ -72,6 +73,87 @@
 </main>
 
 <footer class="footer text-center no-print"><div class="container">Lingayen Tourism Booking System | Laravel Final Project 2026</div></footer>
+
+<!-- Login Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="loginModalLabel">Login</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="POST" action="{{ route('login') }}">
+                @csrf
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email Address</label>
+                        <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}" required autofocus>
+                        @error('email')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" required>
+                        @error('password')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="remember" name="remember">
+                        <label class="form-check-label" for="remember">Remember me</label>
+                    </div>
+                    @if (Route::has('password.request'))
+                        <a href="{{ route('password.request') }}" class="text-decoration-none small">Forgot your password?</a>
+                    @endif
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Register Modal -->
+<div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="registerModalLabel">Create Account</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="POST" action="{{ route('register') }}">
+                @csrf
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Full Name</label>
+                        <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}" required autofocus>
+                        @error('name')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
+                    <div class="mb-3">
+                        <label for="reg_email" class="form-label">Email Address</label>
+                        <input type="email" class="form-control @error('email') is-invalid @enderror" id="reg_email" name="email" value="{{ old('email') }}" required>
+                        @error('email')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
+                    <div class="mb-3">
+                        <label for="reg_password" class="form-label">Password</label>
+                        <input type="password" class="form-control @error('password') is-invalid @enderror" id="reg_password" name="password" required>
+                        @error('password')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
+                    <div class="mb-3">
+                        <label for="password_confirmation" class="form-label">Confirm Password</label>
+                        <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror" id="password_confirmation" name="password_confirmation" required>
+                        @error('password_confirmation')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
