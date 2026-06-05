@@ -1,4 +1,4 @@
-[erd.pdf](https://github.com/user-attachments/files/28646218/erd.pdf)
+
 # Lingayen Tourism Booking System
 
 A Laravel final project for project #19: Tourism Booking System. The system is focused on Lingayen, Pangasinan and is inspired by Booking.com-style browsing: package cards, search/filter, ratings, prices, slots, reservations, payments, admin package management, booking approval, reports, REST API, and API token authentication.
