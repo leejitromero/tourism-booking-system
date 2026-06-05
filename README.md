@@ -350,7 +350,7 @@ Main tables used in the system:
 In this ERD, users can create bookings, tour packages can have many bookings, and each booking has one payment record. Users can also write reviews for tour packages. The `personal_access_tokens` table is used by Laravel Sanctum for API login tokens, but it may not show a direct line because Sanctum uses `tokenable_type` and `tokenable_id` instead of a normal foreign key.
 
 <img width="872" height="1017" alt="erd" src="https://github.com/user-attachments/assets/6b5a4c89-97bf-4b9b-86f7-09be09623ecd" />
-
+exported using DBeaver
 
 ## Laravel Features Used
 
